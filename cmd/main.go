@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"github.com/marcodd23/go-micro-core/pkg/logmgr"
 	"github.com/marcodd23/go-micro-core/pkg/shutdown"
 	"github.com/marcodd23/gopernet/internal/config"
@@ -59,7 +60,7 @@ func main() {
 	server := api.NewServer(gopherNetService, config)
 	go func() {
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logmgr.GetLogger().LogFatal(rootCtx, "Could not listen on :8080 \n", err)
+			logmgr.GetLogger().LogFatal(rootCtx, fmt.Sprintf("Could not listen on :%s \n", config.Server.Port), err)
 		}
 	}()
 
