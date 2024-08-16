@@ -49,7 +49,7 @@ rest:
 
 ### Clone the repo
 ```shell
-git clone https://github.com/yourusername/gopernet.git
+git clone https://github.dev/marcodd23/gopernet.git
 cd gopernet
 ```
 
