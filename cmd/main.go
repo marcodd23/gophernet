@@ -71,9 +71,11 @@ func main() {
 		wg.Wait()
 
 		// Save state one last time before shutdown
+		logmgr.GetLogger().LogInfo(timeoutCtx, "Saving the state before shutdown ... ")
+
 		err := gopherNetService.SaveState()
 		if err != nil {
-			logmgr.GetLogger().LogInfo(timeoutCtx, "Error saving state during shutdown")
+			logmgr.GetLogger().LogError(timeoutCtx, "Error saving state during shutdown", err)
 		}
 
 		logmgr.GetLogger().LogInfo(timeoutCtx, "Server shut down cleanly")

@@ -10,17 +10,19 @@ import (
 )
 
 type MemoryRepository struct {
-	burrows    map[string]*models.Burrow
-	mu         sync.RWMutex
-	stateFile  string
-	reportFile string
+	burrows     map[string]*models.Burrow
+	burrowsList []*models.Burrow // For preserving order
+	mu          sync.RWMutex
+	stateFile   string
+	reportFile  string
 }
 
 func NewMemoryRepository(stateFile, reportFile string) *MemoryRepository {
 	return &MemoryRepository{
-		burrows:    make(map[string]*models.Burrow),
-		stateFile:  stateFile,
-		reportFile: reportFile,
+		burrows:     make(map[string]*models.Burrow),
+		burrowsList: make([]*models.Burrow, 0),
+		stateFile:   stateFile,
+		reportFile:  reportFile,
 	}
 }
 
@@ -28,8 +30,8 @@ func (s *MemoryRepository) GetAllBurrows() []*models.Burrow {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
-	burrows := make([]*models.Burrow, 0, len(s.burrows))
-	for _, burrow := range s.burrows {
+	burrowsListCopy := make([]*models.Burrow, 0, len(s.burrowsList))
+	for _, burrow := range s.burrowsList {
 		// Create a deep copy of the burrow before returning
 		// to avoid that the user of the repository could modify the
 		// data in the storage
@@ -41,10 +43,10 @@ func (s *MemoryRepository) GetAllBurrows() []*models.Burrow {
 			Age:      burrow.Age,
 		}
 
-		burrows = append(burrows, copiedBurrow)
+		burrowsListCopy = append(burrowsListCopy, copiedBurrow)
 	}
 
-	return burrows
+	return burrowsListCopy
 }
 
 func (s *MemoryRepository) RentBurrow(name string) error {
@@ -69,7 +71,7 @@ func (s *MemoryRepository) UpdateAllBurrows() {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	for _, burrow := range s.burrows {
+	for _, burrow := range s.burrowsList {
 		burrow.UpdateDepth()
 	}
 }
@@ -88,7 +90,12 @@ func (s *MemoryRepository) LoadState() error {
 		return errors.WithMessage(err, "failed to unmarshal state data")
 	}
 
+	// Clear existing data
+	s.burrows = make(map[string]*models.Burrow)
+	s.burrowsList = make([]*models.Burrow, 0)
+
 	for _, burrow := range burrows {
+		s.burrowsList = append(s.burrowsList, burrow)
 		s.burrows[burrow.Name] = burrow
 	}
 
@@ -99,13 +106,7 @@ func (s *MemoryRepository) SaveState() error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	// Convert the map to a slice of Burrow pointers
-	burrowSlice := make([]*models.Burrow, 0, len(s.burrows))
-	for _, burrow := range s.burrows {
-		burrowSlice = append(burrowSlice, burrow)
-	}
-
-	data, err := json.MarshalIndent(burrowSlice, "", "  ")
+	data, err := json.MarshalIndent(s.burrowsList, "", "  ")
 	if err != nil {
 		return errors.WithMessage(err, "failed to marshal state")
 	}
