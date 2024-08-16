@@ -6,6 +6,7 @@ type Repository interface {
 	GetAllBurrows() []*models.Burrow
 	RentBurrow(name string) error
 	UpdateAllBurrows()
+	AddBurrow(burrow *models.Burrow)
 }
 
 type StatefulRepository interface {
@@ -13,4 +14,6 @@ type StatefulRepository interface {
 	LoadState() error
 	SaveState() error
 	SaveReport(report string) error
+	GetStateFile() string
+	GetReportFile() string
 }

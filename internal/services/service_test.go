@@ -42,6 +42,19 @@ func (m *MockStatefulRepository) UpdateAllBurrows() {
 	m.Called()
 }
 
+func (m *MockStatefulRepository) GetStateFile() string {
+	args := m.Called()
+	return args.String(0)
+}
+func (m *MockStatefulRepository) GetReportFile() string {
+	args := m.Called()
+	return args.String(0)
+}
+
+func (m *MockStatefulRepository) AddBurrow(burrow *models.Burrow) {
+	m.Called(burrow)
+}
+
 func TestGopherNetService_LoadInitialState(t *testing.T) {
 	mockRepo := new(MockStatefulRepository)
 	service := services.NewGopherNetService(mockRepo)
