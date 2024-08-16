@@ -141,4 +141,5 @@ func (s *MemoryRepository) AddBurrow(burrow *models.Burrow) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.burrows[burrow.Name] = burrow
+	s.burrowsList = append(s.burrowsList, burrow)
 }
