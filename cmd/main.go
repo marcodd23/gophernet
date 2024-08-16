@@ -79,6 +79,6 @@ func main() {
 			logmgr.GetLogger().LogError(timeoutCtx, "Error saving state during shutdown", err)
 		}
 
-		logmgr.GetLogger().LogInfo(timeoutCtx, "Server shut down cleanly")
+		logmgr.GetLogger().LogInfo(timeoutCtx, "Server shut down gracefully")
 	})
 }
