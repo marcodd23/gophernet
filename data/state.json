@@ -1,37 +1,37 @@
 [
   {
     "name": "The Underground Palace",
-    "depth": 2.6618168646968847,
+    "depth": 2.5,
     "width": 1.2,
     "occupied": true,
-    "age": 17
+    "age": 10
   },
   {
     "name": "Tunnel of Mystery",
     "depth": 1.8,
     "width": 1.1,
     "occupied": false,
-    "age": 37
+    "age": 30
   },
   {
     "name": "The Molehole",
-    "depth": 3.1941802376362616,
+    "depth": 3.0,
     "width": 1.3,
     "occupied": true,
-    "age": 57
+    "age": 50
   },
   {
     "name": "The Deep Den",
     "depth": 2.2,
     "width": 1.2,
     "occupied": false,
-    "age": 47
+    "age": 40
   },
   {
     "name": "Surface Level Statis",
-    "depth": 0.010552296787698255,
+    "depth": 0,
     "width": 1.3,
     "occupied": true,
-    "age": 12
+    "age": 5
   }
 ]
