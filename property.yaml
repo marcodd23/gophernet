@@ -1,0 +1,21 @@
+name: "Gophernet"
+environment: local
+version: "1.0"
+logging:
+  level: debug
+
+server:
+  port: "8080"
+
+rest:
+  endpoints:
+    get-burrows:
+      method: "GET"
+      path: "/burrows"
+    rent-burrow:
+      method: "POST"
+      path: "/burrows/rent"
+    get-report:
+      method: "GET"
+      path: "/report"
+
