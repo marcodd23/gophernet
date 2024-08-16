@@ -27,7 +27,7 @@ func main() {
 	logmgr.SetupLogger(config)
 
 	// Define a string flag with a name, default value, and usage description.
-	dataFile := flag.String("dataFile", "data/initial.json", "Path to the initial data file")
+	dataFile := flag.String("dataFile", "data/state.json", "Path to the initial state file")
 
 	// Parse the command-line flags from os.Args (the arguments passed to the program).
 	flag.Parse()

@@ -4,7 +4,7 @@ GopherNet is a backend API for managing rentals of gopher burrows. Each burrow i
 
 ## Features
 
-- Load initial burrow data from a JSON file (default from data/initial.json or specifying your file with "-dataFile" flag)
+- Load initial burrow data from a JSON file (default from data/state.json or specifying your file with "-dataFile" flag)
 - Manage burrow rentals through HTTP API.
 - Background tasks for updating burrow depths, saving state, and generating reports (inside data/report.txt).
 - Graceful shutdown with state persistence.
@@ -70,11 +70,11 @@ go run ./cmd
 ```
 or
 ```shell
-go run cmd/main.go --dataFile=data/initial.json
+go run cmd/main.go --dataFile=data/state.json
 ```
 
 Command-Line Flags
---dataFile: Path to the initial JSON file that contains the burrow data. The default value is data/initial.json.
+--dataFile: Path to the initial JSON file that contains the burrow data. The default value is data/state.json.
 
 
 # API Endpoints

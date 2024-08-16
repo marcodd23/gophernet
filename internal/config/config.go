@@ -14,7 +14,7 @@ type ServiceConfig struct {
 
 // Rest configuration
 type Rest struct {
-	Endpoints map[string]Endpoint `yaml:"api"`
+	Endpoints map[string]Endpoint `yaml:"endpoints"`
 }
 
 // Endpoint configuration
